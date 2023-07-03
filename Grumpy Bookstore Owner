@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int maxSatisfied(vector<int>& customers, vector<int>& grumpy, int minutes) {
+        int sum = 0;
+        for(int i=0; i<customers.size(); i++){
+            if(grumpy[i] == 0){
+                sum += customers[i];
+            }
+        }
+        int maximum = sum;
+        for(int i=0; i<customers.size(); i++){
+            if(grumpy[i] == 1){
+                sum += customers[i];
+            }
+            if(i < minutes-1){
+                continue;
+            }
+            else if( i == minutes-1){
+                maximum = max(sum, maximum);
+            }
+            else{
+                if(grumpy[i-minutes] == 1){
+                    sum -= customers[i-minutes];
+                }
+                maximum = max(sum, maximum);
+            }
+        }
+        return maximum;
+    }
+};
